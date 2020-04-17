@@ -172,6 +172,9 @@ select语句中的字段可以用下划线，也可以直接处理成小驼峰�
 		log.info("list:{}",list);
 	}
 ```
+## 示例
+
+https://github.com/1991wangliang/simple-mybatis-demo
 
 ## 支持
 [issue](https://github.com/codingapi/simple-mybatis/issues)

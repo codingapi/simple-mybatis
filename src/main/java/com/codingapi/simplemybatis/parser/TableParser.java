@@ -97,7 +97,7 @@ public class TableParser {
     private Method getFieldMethod(Field field) {
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             String name = field.getName();
-            if (field.getType().equals(Boolean.class) && field.getName().startsWith("is")) {
+            if (field.getType().equals(boolean.class) && field.getName().startsWith("is")) {
                 name = name.replaceFirst("is", "");
                 name = toLowerCaseFirstOne(name);
             }

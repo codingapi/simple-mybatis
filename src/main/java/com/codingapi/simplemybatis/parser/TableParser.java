@@ -3,8 +3,6 @@ package com.codingapi.simplemybatis.parser;
 import com.codingapi.simplemybatis.properties.DbProperties.ColumnNameStyle;
 import com.codingapi.simplemybatis.properties.GlabelProperties;
 import com.codingapi.simplemybatis.utils.StringCharacterUtils;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -143,13 +141,50 @@ public class TableParser {
     }
 
 
-    @Data
-    @AllArgsConstructor
     public static class ColumnFiled {
         private String fieldName;
         private String columnName;
         private Object value;
         private Method method;
+
+        public ColumnFiled(String fieldName, String columnName, Object value, Method method) {
+            this.fieldName = fieldName;
+            this.columnName = columnName;
+            this.value = value;
+            this.method = method;
+        }
+
+        public String getFieldName() {
+            return fieldName;
+        }
+
+        public void setFieldName(String fieldName) {
+            this.fieldName = fieldName;
+        }
+
+        public String getColumnName() {
+            return columnName;
+        }
+
+        public void setColumnName(String columnName) {
+            this.columnName = columnName;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public void setValue(Object value) {
+            this.value = value;
+        }
+
+        public Method getMethod() {
+            return method;
+        }
+
+        public void setMethod(Method method) {
+            this.method = method;
+        }
     }
 
 

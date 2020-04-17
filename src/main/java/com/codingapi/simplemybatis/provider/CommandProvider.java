@@ -1,7 +1,6 @@
 package com.codingapi.simplemybatis.provider;
 
 import com.codingapi.simplemybatis.parser.SqlParser;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 
 import java.lang.reflect.InvocationTargetException;

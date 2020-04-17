@@ -1,6 +1,7 @@
 package com.codingapi.simplemybatis.query;
 
-import org.springframework.util.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author lorne
@@ -47,7 +48,7 @@ public class QuerySqlBuilder {
     }
 
     private void orderBy() {
-        if (!StringUtils.isEmpty(query.getOrderBy())) {
+        if (StringUtils.isNotEmpty(query.getOrderBy())) {
             currentSql.append(" order by ");
             currentSql.append(query.getOrderBy());
         }

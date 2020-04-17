@@ -1,7 +1,6 @@
 package com.codingapi.simplemybatis.query;
 
 import com.codingapi.simplemybatis.query.parser.QueryCondition;
-import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,20 +14,16 @@ import java.util.Map;
 
 public class Query {
 
-    @Getter
     private List<QueryParameter> parameterList;
 
     private List<String> conditions;
 
     private int index = 0;
 
-    @Getter
     private String select;
 
-    @Getter
     private String orderBy;
 
-    @Getter
     public Map<String, Object> data;
 
 
@@ -41,6 +36,21 @@ public class Query {
         pushData();
     }
 
+    public String getSelect() {
+        return select;
+    }
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public Map<String, Object> getData() {
+        return data;
+    }
+
+    public List<QueryParameter> getParameterList() {
+        return parameterList;
+    }
 
     public String getCondition() {
         try {

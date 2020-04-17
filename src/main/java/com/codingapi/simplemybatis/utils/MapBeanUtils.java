@@ -1,6 +1,5 @@
 package com.codingapi.simplemybatis.utils;
 
-import lombok.SneakyThrows;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.util.Map;
@@ -12,10 +11,14 @@ import java.util.Map;
  */
 public class MapBeanUtils {
 
-    @SneakyThrows
     public static <T> T toBean(Class<T> clazz, Map<String, Object> map) {
-        T t = clazz.newInstance();
-        BeanUtils.populate(t, map);
-        return t;
+        T t = null;
+        try {
+            t = clazz.newInstance();
+            BeanUtils.populate(t, map);
+            return t;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
     }
 }

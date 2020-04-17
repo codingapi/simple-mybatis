@@ -1,14 +1,12 @@
 package com.codingapi.simplemybatis.query;
 
 import com.codingapi.simplemybatis.query.parser.QueryCondition;
-import lombok.Data;
 
 /**
  * @author lorne
  * @date 2020/4/15
  * @description
  */
-@Data
 public class QueryParameter {
 
     public QueryParameter(String key, Object val, QueryCondition condition) {
@@ -22,6 +20,21 @@ public class QueryParameter {
     private Object two;
     private QueryCondition condition;
 
+    public String getKey() {
+        return key;
+    }
+
+    public Object getVal() {
+        return val;
+    }
+
+    public Object getTwo() {
+        return two;
+    }
+
+    public QueryCondition getCondition() {
+        return condition;
+    }
 
     public String getParamKey() {
         return getParamKey(false);

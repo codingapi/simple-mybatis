@@ -1,6 +1,5 @@
 package com.codingapi.simplemybatis.parser;
 
-import lombok.Getter;
 
 import java.util.List;
 
@@ -11,13 +10,10 @@ import java.util.List;
  */
 public class TableInfo {
 
-    @Getter
     private String tableName;
 
-    @Getter
     private TableParser.ColumnFiled idColumnFiled;
 
-    @Getter
     private List<TableParser.ColumnFiled> columnFields;
 
     public TableInfo(String tableName, TableParser.ColumnFiled idColumnFiled, List<TableParser.ColumnFiled> columnFields) {
@@ -26,6 +22,17 @@ public class TableInfo {
         this.columnFields = columnFields;
     }
 
+    public TableParser.ColumnFiled getIdColumnFiled() {
+        return idColumnFiled;
+    }
+
+    public List<TableParser.ColumnFiled> getColumnFields() {
+        return columnFields;
+    }
+
+    public String getTableName() {
+        return tableName;
+    }
 
     public String createColumnName(Object idValue) {
         StringBuilder stringBuilder = new StringBuilder();

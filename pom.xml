@@ -8,7 +8,6 @@
     <version>1.0.0</version>
     <name>simple-mybatis</name>
     <description>simple mybatis project for Spring Boot</description>
-    <packaging>pom</packaging>
 
     <properties>
         <maven.compile.source>1.8</maven.compile.source>

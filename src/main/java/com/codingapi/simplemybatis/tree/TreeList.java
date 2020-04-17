@@ -1,10 +1,8 @@
 package com.codingapi.simplemybatis.tree;
 
-import lombok.Data;
 
 import java.util.List;
 
-@Data
 public class TreeList<T> {
 
     T node;
@@ -15,5 +13,19 @@ public class TreeList<T> {
         this.node = node;
     }
 
+    public T getNode() {
+        return node;
+    }
 
+    public void setNode(T node) {
+        this.node = node;
+    }
+
+    public List<TreeList<T>> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<TreeList<T>> children) {
+        this.children = children;
+    }
 }

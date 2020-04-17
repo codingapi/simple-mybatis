@@ -1,7 +1,6 @@
 package com.codingapi.simplemybatis.query;
 
 import com.codingapi.simplemybatis.query.parser.QueryCondition;
-import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,8 +24,11 @@ public class QueryBuilder {
     }
 
     public class Parameter {
-        @Getter
         private List<QueryParameter> parameterList = new ArrayList<>();
+
+        public List<QueryParameter> getParameterList() {
+            return parameterList;
+        }
 
         public void column(QueryParameter queryParameter) {
             parameterList.add(queryParameter);
@@ -113,8 +115,11 @@ public class QueryBuilder {
     }
 
     public class Condition {
-        @Getter
         private List<String> conditions = new ArrayList<>();
+
+        public List<String> getConditions() {
+            return conditions;
+        }
 
         /**
          * and 条件

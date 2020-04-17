@@ -1,8 +1,6 @@
 package com.codingapi.simplemybatis.properties;
 
-import lombok.Data;
 
-@Data
 public class DbProperties {
 
     private ColumnNameStyle columnNameStyle = ColumnNameStyle.UNDERLINE;
@@ -11,4 +9,7 @@ public class DbProperties {
         CAMEL, UNDERLINE
     }
 
+    public ColumnNameStyle getColumnNameStyle() {
+        return columnNameStyle;
+    }
 }

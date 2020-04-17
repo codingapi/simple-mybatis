@@ -3,14 +3,12 @@ package com.codingapi.simplemybatis.provider;
 import com.codingapi.simplemybatis.parser.SqlParser;
 import com.codingapi.simplemybatis.query.Query;
 import com.codingapi.simplemybatis.query.QuerySqlBuilder;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 
 import java.lang.reflect.InvocationTargetException;
 
 
-@Slf4j
 public class QueryProvider extends BaseProvider {
 
     public String getById(Object obj, ProviderContext context) throws IllegalAccessException, InvocationTargetException {

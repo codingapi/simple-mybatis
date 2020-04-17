@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/codingapi/simple-mybatis.svg?branch=master)](https://travis-ci.org/codingapi/simple-mybatis)
+[![Build Status](https://travis-ci.org/codingapi/simple-mybatis.svg?branch=master)](https://travis-ci.org/codingapi/simple-mybatis) [![codecov](https://codecov.io/gh/codingapi/simple-mybatis/branch/master/graph/badge.svg)](https://codecov.io/gh/codingapi/simple-mybatis)
 # simple-mybatis
 
 ## 前言

@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/codingapi/simple-mybatis.svg?branch=master)](https://travis-ci.org/codingapi/simple-mybatis)
 # simple-mybatis
 
 ## 前言
@@ -9,6 +10,15 @@ mybatis框架已经被大量使用，但是随着近些时间springboot的流行
 * 基于pagehelper提供了分页支持
 * 提供Query方式对查询语句的支持
 * 提供Tree数据接口的支持
+
+## 仓库地址
+```$xslt
+<dependency>
+    <groupId>com.codingapi</groupId>
+    <artifactId>simple-mybatis</artifactId>
+    <version>1.0.0</version>
+ </dependency>
+```
 
 ## 使用说明
 
@@ -164,7 +174,7 @@ select语句中的字段可以用下划线，也可以直接处理成小驼峰�
 ```
 
 ## 支持
-issue
+[issue](https://github.com/codingapi/simple-mybatis/issues)
 
 ## 使用建议
 

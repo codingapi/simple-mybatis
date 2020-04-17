@@ -120,37 +120,11 @@
                     <compilerArgument>-Xlint:deprecation</compilerArgument>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 
     <profiles>
-        <profile>
-            <id>dev</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <boot.profile>dev</boot.profile>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven.source.plugin}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
-                </plugins>
-            </build>
-        </profile>
         <profile>
             <id>travis</id>
             <properties>
@@ -191,6 +165,123 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>ossrh</id>
+
+            <properties>
+                <repository.id>ossrh</repository.id>
+                <repository.name>Maven Central Staging Repository</repository.name>
+                <repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repository.url>
+
+                <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+                <nexus.staging.maven.plugin>1.6.3</nexus.staging.maven.plugin>
+                <maven.source.plugin>3.0.1</maven.source.plugin>
+                <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
+                <maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
+                <maven.gpg.plugin>1.6</maven.gpg.plugin>
+            </properties>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven.source.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${nexus.staging.maven.plugin}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven.javadoc.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
+
+
+
+    <distributionManagement>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+
+    <scm>
+        <connection>scm:git:https://github.com/codingapi/simple-mybatis.git</connection>
+        <developerConnection>scm:git:https://github.com/codingapi/simple-mybatis.git</developerConnection>
+        <url>https://github.com/codingapi/simple-mybatis</url>
+        <tag>v${project.version}</tag>
+    </scm>
+
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>lorne</name>
+            <email>wangliang@codingapi.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
 </project>

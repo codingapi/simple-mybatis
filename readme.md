@@ -2,14 +2,14 @@
 # simple-mybatis
 
 ## 前言
-mybatis框架已经被大量使用，但是随着近些时间springboot的流行还有很多人在使用mybatis时采用xml的方式配置mapper.该框架将让Mybatis可以更方便的在springboot项目上使用。
+随着springboot开发方式的流行,但是还有好多人在使用mybatis时依旧采用xml的方式配置mapper,该框架的出现的原因主要是为了可以更方便的将Mybatis在springboot项目上使用。
 
 ## 框架说明
-* 框架依赖兵支持jpa注解的写法
+* 框架依赖并兼容jpa注解
 * 提供了常用操作的Mapper封装
-* 基于pagehelper提供了分页支持
+* 基于pagehelper提供了分页的规范支持
 * 提供Query方式对查询语句的支持
-* 提供Tree数据接口的支持
+* 提供Tree数据格式的规范支持
 
 ## 仓库地址
 ```$xslt

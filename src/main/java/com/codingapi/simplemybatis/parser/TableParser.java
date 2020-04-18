@@ -50,6 +50,9 @@ public class TableParser {
     private void loadColumnNames(Object obj) throws IllegalAccessException, InvocationTargetException {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
+            if(field.isSynthetic()){
+                continue;
+            }
             Transient transientField = field.getAnnotation(Transient.class);
             if (transientField != null) {
                 continue;

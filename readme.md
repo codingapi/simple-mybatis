@@ -147,20 +147,21 @@ select语句中的字段可以用下划线，也可以直接处理成小驼峰�
 ```java
     @Test
 	void viewList(){
+	 //select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id where d.time = STR_TO_DATE('2020-04-12','%Y-$m-%d') or d.id = 31 and d.id in (1,2,3,4,5,6,7,8,9,10) and d.name like '%2%' order by d.name desc  
 		List<DemoView> list =
 				demoMapper.queryView(
 						DemoView.class,
 						QueryBuilder.Build()
 								.select("select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id ")
 								.where()
-								.date("time","2020-04-12")
+								.date("d.time","2020-04-12")
 								.or()
-								.equal("id",31)
+								.equal("d.id",31)
 								.and()
-								.in("id",1,2,3,4,5,6,7,8,9,10)
+								.in("d.id",1,2,3,4,5,6,7,8,9,10)
 								.and()
-								.like("name","2")
-								.orderBy("name desc")
+								.like("d.name","2")
+								.orderBy("d.name desc")
 								.builder());
 		log.info("list:{}",list);
 	}

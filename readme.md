@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/codingapi/simple-mybatis.svg?branch=master)](https://travis-ci.org/codingapi/simple-mybatis) [![codecov](https://codecov.io/gh/codingapi/simple-mybatis/branch/master/graph/badge.svg)](https://codecov.io/gh/codingapi/simple-mybatis)
+[![Build Status](https://travis-ci.org/codingapi/simple-mybatis.svg?branch=master)](https://travis-ci.org/codingapi/simple-mybatis) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.codingapi/simple-mybatis/badge.svg?style=plastic)](https://maven-badges.herokuapp.com/maven-central/com.codingapi/simple-mybatis) [![codecov](https://codecov.io/gh/codingapi/simple-mybatis/branch/master/graph/badge.svg)](https://codecov.io/gh/codingapi/simple-mybatis)
 # simple-mybatis
 
 ## 前言
@@ -16,7 +16,7 @@
 <dependency>
     <groupId>com.codingapi</groupId>
     <artifactId>simple-mybatis</artifactId>
-    <version>1.0.0</version>
+    <version>${last.version}</version>
  </dependency>
 ```
 

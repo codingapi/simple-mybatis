@@ -7,6 +7,7 @@
     <artifactId>simple-mybatis</artifactId>
     <version>1.0.0</version>
     <name>simple-mybatis</name>
+    <url>https://github.com/codingapi/simple-mybatis</url>
     <description>simple mybatis project for Spring Boot</description>
 
     <properties>
@@ -126,6 +127,16 @@
 
     <profiles>
         <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+
+        <profile>
             <id>travis</id>
             <properties>
                 <boot.profile>travis</boot.profile>
@@ -135,7 +146,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>0.8.2</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -156,7 +166,6 @@
                     <plugin>
                         <groupId>org.openclover</groupId>
                         <artifactId>clover-maven-plugin</artifactId>
-                        <version>4.3.1</version>
                         <configuration>
                             <generateHtml>true</generateHtml>
                             <generateXml>true</generateXml>
@@ -171,12 +180,11 @@
 
             <properties>
                 <repository.id>ossrh</repository.id>
-                <repository.name>Maven Central Staging Repository</repository.name>
-                <repository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</repository.url>
-
                 <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
-                <nexus.staging.maven.plugin>1.6.3</nexus.staging.maven.plugin>
+                <maven.compile.source>1.8</maven.compile.source>
+                <maven.compile.target>1.8</maven.compile.target>
                 <maven.source.plugin>3.0.1</maven.source.plugin>
+                <nexus.staging.maven.plugin>1.6.3</nexus.staging.maven.plugin>
                 <maven-compiler-plugin.version>3.6.0</maven-compiler-plugin.version>
                 <maven.javadoc.plugin>2.10.3</maven.javadoc.plugin>
                 <maven.gpg.plugin>1.6</maven.gpg.plugin>
@@ -186,8 +194,17 @@
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <source>${maven.compile.source}</source>
+                            <target>${maven.compile.target}</target>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <compilerArgument>-Xlint:deprecation</compilerArgument>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven.source.plugin}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -202,7 +219,6 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus.staging.maven.plugin}</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
@@ -215,7 +231,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven.javadoc.plugin}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -224,13 +239,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                        <configuration>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:none</additionalOption>
+                            </additionalOptions>
+                        </configuration>
                     </plugin>
 
 
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven.gpg.plugin}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>

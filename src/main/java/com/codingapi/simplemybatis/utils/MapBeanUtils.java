@@ -14,7 +14,7 @@ public class MapBeanUtils {
     public static <T> T toBean(Class<T> clazz, Map<String, Object> map) {
         T t = null;
         try {
-            t = clazz.newInstance();
+            t = clazz.getDeclaredConstructor().newInstance();
             BeanUtils.populate(t, map);
             return t;
         } catch (Exception e) {

@@ -2,7 +2,7 @@
 # simple-mybatis
 
 ## 前言
-随着springboot开发方式的流行,但是还有好多人在使用mybatis时依旧采用xml的方式配置mapper,该框架的出现的原因主要是为了可以更方便的将Mybatis在springboot项目上使用。
+随着springboot开发方式的流行,但是还有好多人在使用mybatis时依旧采用xml的方式配置mapper,该框架出现的主要原因是为了让Mybatis更方便的在springboot项目下上使用。
 
 ## 框架说明
 * 框架依赖并兼容jpa注解

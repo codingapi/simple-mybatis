@@ -1,5 +1,6 @@
 package com.codingapi.simplemybatis.utils;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 public class MapCamelUtils {
 
     public static void camelMap(Map<String, Object> item) {
-        Set<String> keys = item.keySet();
+        Set<String> keys = new HashSet<>(item.keySet());
         for (String key : keys) {
             String newKey = StringCharacterUtils.underlineToCamel(key);
             if (!newKey.equals(key)) {

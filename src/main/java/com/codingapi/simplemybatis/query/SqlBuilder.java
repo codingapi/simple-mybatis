@@ -1,7 +1,6 @@
 package com.codingapi.simplemybatis.query;
 
 
-import com.codingapi.simplemybatis.query.parser.QueryCondition;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -9,17 +8,15 @@ import org.apache.commons.lang3.StringUtils;
  * @date 2020/4/15
  * @description
  */
-public class QuerySqlBuilder {
+public class SqlBuilder {
 
     private StringBuilder currentSql;
     private Query query;
-    private QueryConditionParser queryConditionParser = new QueryConditionParser();
     private String tableName;
     private String columnName;
 
-    public QuerySqlBuilder(String columnName, String tableName, Query query) {
+    public SqlBuilder(String columnName, String tableName, Query query) {
         this.currentSql = new StringBuilder();
-        ;
         this.query = query;
         this.tableName = tableName;
         this.columnName = columnName;
@@ -42,20 +39,15 @@ public class QuerySqlBuilder {
     }
 
     private void appendParameter() {
-        for (QueryParameter queryParameter : query.getParameterList()) {
-            if(queryParameter.getCondition().equals(QueryCondition.SQL)){
-                currentSql.append(queryParameter.getSql());
-            }else {
-                currentSql.append(queryConditionParser.parserParam(queryParameter));
-            }
+        for (ConditionParameter conditionParameter : query.getParameterList()) {
+            currentSql.append(conditionParameter.getSql());
             currentSql.append(query.getCondition());
         }
     }
 
-    private void orderBy() {
-        if (StringUtils.isNotEmpty(query.getOrderBy())) {
-            currentSql.append(" order by ");
-            currentSql.append(query.getOrderBy());
+    private void bySql() {
+        if (StringUtils.isNotEmpty(query.getBySql())) {
+            currentSql.append(query.getBySql());
         }
     }
 
@@ -66,7 +58,7 @@ public class QuerySqlBuilder {
             appendParameter();
             appendOver();
         }
-        orderBy();
+        bySql();
         currentSql.append("</script>");
         return currentSql.toString();
     }
@@ -85,7 +77,6 @@ public class QuerySqlBuilder {
             currentSql.append(" from ");
             currentSql.append(tableName);
         }
-
     }
 
 }

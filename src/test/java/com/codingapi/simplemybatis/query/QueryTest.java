@@ -32,12 +32,12 @@ class QueryTest {
         SqlParser sqlParser = createSqlParser();
         String sql = sqlParser.createQuery(QueryBuilder.Build()
                 .where()
-                .equal("name","hello")
+                .condition("name=#{name}","hello")
                 .and()
-                .date("create_time","2020-01-12")
+                .condition("create_time=STR_TO_DATE(%{createTime},'%Y-%m-%d')","2020-01-12")
                 .or()
-                .in("id",1,2,3,4,5)
-                .orderBy("name desc")
+                .condition("id in (${ids})", 1,2,3,4,5)
+                .groupBy("d.name")
                 .builder());
         System.out.println(sql);
     }
@@ -48,16 +48,17 @@ class QueryTest {
         Query query = QueryBuilder.Build()
                 .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
                 .where()
-                .column("name","234","d.name = #{name}")
-//                .equal("d.name","hello")
-                .and()
-                .date("d.create_time","2020-01-12")
+                .condition("d.name = #{name}","name","234")
                 .or()
-                .in("d.id",1,2,3,4,5)
+                .condition("d.name = '1'")
+                .and()
+                .condition("create_time=STR_TO_DATE(%{createTime},'%Y-%m-%d')","createTime","2020-01-12")
+//                .or()
+//                .condition("d.id",1,2,3,4,5)
                 .orderBy("d.name desc")
                 .builder();
-        QuerySqlBuilder querySqlBuilder = new QuerySqlBuilder(query.getSelect(),null,query);
-        String sql = querySqlBuilder.getSql();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
+        String sql = sqlBuilder.getSql();
         System.out.println(sql);
     }
 

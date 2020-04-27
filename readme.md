@@ -146,32 +146,31 @@ query 通过QueryBuilder来创建，当查询返回的是表的数据，则不�
 select语句中的字段可以用下划线，也可以直接处理成小驼峰。都可以转成java bean对象。     
 ```java
     @Test
-	void viewList(){
-	 //select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id where d.time = STR_TO_DATE('2020-04-12','%Y-$m-%d') or d.id = 31 and d.id in (1,2,3,4,5,6,7,8,9,10) and d.name like '%2%' order by d.name desc  
-		List<DemoView> list =
-				demoMapper.queryView(
-						DemoView.class,
-						QueryBuilder.Build()
-								.select("select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id ")
-								.where()
-								.date("d.time","2020-04-12")
-								.or()
-								.equal("d.id",31)
-								.and()
-								.in("d.id",1,2,3,4,5,6,7,8,9,10)
-								.and()
-								.like("d.name","2")
-								.orderBy("d.name desc")
-								.builder());
-		log.info("list:{}",list);
-	}
+    void viewList(){
+        List<DemoView> list =
+                demoMapper.queryView(
+                        DemoView.class,
+                        QueryBuilder.Build()
+                                .select("select * from t_demo d left join t_refrigerator r on d.id = r.ID ")
+                                .where()
+                                .condition("d.id between #{small} and #{larger}", Map.of("small",1,"larger",10))
+                                .or()
+                                .condition("r.state = #{state}",1)
+                                .and()
+                                .condition("d.id in (${ids})",1,2,3,4,5,6,7,8,9,10)
+                                .or()
+                                .condition("d.name like '%${name}%'","2")
+                                .orderBy("d.id desc")
+                                .builder());
+        log.info("list:{}",list);
+    }
 
-	@Test
-	void queryList(){
-		//select * from t_demo where name = '123'
-		List<Demo> list = demoMapper.query(QueryBuilder.Build().where().equal("name","123").builder());
-		log.info("list:{}",list);
-	}
+    @Test
+    void queryList(){
+        //select * from t_demo where name = '123'
+        List<Demo> list = demoMapper.query(QueryBuilder.Build().where().condition("name=#{name}","123").builder());
+        log.info("list:{}",list);
+    }
 ```
 ## 示例
 

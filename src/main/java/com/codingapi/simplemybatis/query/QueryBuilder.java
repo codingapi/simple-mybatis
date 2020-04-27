@@ -1,10 +1,10 @@
 package com.codingapi.simplemybatis.query;
 
-import com.codingapi.simplemybatis.query.parser.QueryCondition;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lorne
@@ -13,9 +13,9 @@ import java.util.List;
  */
 public class QueryBuilder {
 
-    private Parameter parameter = new Parameter();
     private Condition condition = new Condition();
-    private String orderBy;
+    private Splice splice = new Splice();
+    private String bySql;
     private String select;
 
     public QueryBuilder select(String select) {
@@ -23,115 +23,45 @@ public class QueryBuilder {
         return this;
     }
 
-    public class Parameter {
-        private List<QueryParameter> parameterList = new ArrayList<>();
+    public class Condition {
+        private List<ConditionParameter> conditions = new ArrayList<>();
 
-        public List<QueryParameter> getParameterList() {
-            return parameterList;
+        public Splice condition(String conditionSql,String paramKey, Object paramVal) {
+            conditions.add(new ConditionParameter(paramKey, paramVal, conditionSql));
+            return splice;
         }
 
-        public Condition column(QueryParameter queryParameter) {
-            parameterList.add(queryParameter);
-            return condition;
+        public Splice condition(String conditionSql,Map<String,Object> map) {
+            conditions.add(new ConditionParameter(map, conditionSql));
+            return splice;
         }
 
-        public Condition column(String key, Object val,String sql) {
-            parameterList.add(new QueryParameter(key, val, sql));
-            return condition;
+        public Splice condition(String conditionSql) {
+            conditions.add(new ConditionParameter(conditionSql));
+            return splice;
         }
 
-
-        /**
-         * 完全匹配
-         *
-         * @param key
-         * @param val
-         * @return
-         */
-        public Condition equal(String key, Object val) {
-            parameterList.add(new QueryParameter(key, val, QueryCondition.EQUAL));
-            return condition;
+        public Splice condition(String conditionSql,Object paramVal) {
+            conditions.add(new ConditionParameter( paramVal, conditionSql));
+            return splice;
         }
 
-        /**
-         * 大于匹配
-         *
-         * @param key
-         * @param val
-         * @return
-         */
-        public Condition greater(String key, Object val) {
-            parameterList.add(new QueryParameter(key, val, QueryCondition.GREATER));
-            return condition;
+        public Splice condition(String conditionSql,Object... paramVal) {
+            conditions.add(new ConditionParameter(StringUtils.join(paramVal,","), conditionSql));
+            return splice;
         }
-
-        /**
-         * 小于匹配
-         *
-         * @param key
-         * @param val
-         * @return
-         */
-        public Condition less(String key, Object val) {
-            parameterList.add(new QueryParameter(key, val, QueryCondition.LESS));
-            return condition;
-        }
-
-        /**
-         * 模糊匹配
-         *
-         * @param key
-         * @param val
-         * @return
-         */
-        public Condition like(String key, String val) {
-            parameterList.add(new QueryParameter(key, val, QueryCondition.LIKE));
-            return condition;
-        }
-
-        /**
-         * 日期字段
-         *
-         * @param key 数据库字段
-         * @param val %Y-%m-%d 格式的时间串 2020-02-17
-         * @return
-         */
-        public Condition date(String key, String val) {
-            parameterList.add(new QueryParameter(key, val, QueryCondition.DATE));
-            return condition;
-        }
-
-
-        /**
-         * in 包含
-         *
-         * @param key
-         * @param val
-         * @return
-         */
-        public Condition in(String key, Object... val) {
-            parameterList.add(new QueryParameter(key, Arrays.asList(val), QueryCondition.IN));
-            return condition;
-        }
-
-
     }
 
-    public class Condition {
-        private List<String> conditions = new ArrayList<>();
-
-        public List<String> getConditions() {
-            return conditions;
-        }
-
+    public class Splice {
+        private List<String> splices = new ArrayList<>();
         /**
          * and 条件
          *
          * @return
          */
-        public Parameter and() {
-            conditions.add(" and ");
-            return parameter;
+        public Condition and() {
+            splices.add(" and ");
+            return condition;
         }
 
         /**
@@ -139,33 +69,41 @@ public class QueryBuilder {
          *
          * @return
          */
-        public Parameter or() {
-            conditions.add(" or ");
-            return parameter;
+        public Condition or() {
+            splices.add(" or ");
+            return condition;
+        }
+
+        public Condition splice(String splice) {
+            splices.add(String.format(" %s ",splice));
+            return condition;
         }
 
         public QueryBuilder orderBy(String orderByStr) {
-            orderBy = orderByStr;
+            bySql = String.format(" order by %s",orderByStr);
+            return QueryBuilder.this;
+        }
+
+        public QueryBuilder groupBy(String groupBySql) {
+            bySql = String.format(" group by %s",groupBySql);
             return QueryBuilder.this;
         }
 
         public Query builder() {
-            return new Query(select, parameter.parameterList, condition.conditions, orderBy);
+            return new Query(select, condition.conditions, splice.splices, bySql);
         }
     }
 
     public Query builder() {
-        return new Query(select, parameter.parameterList, condition.conditions, orderBy);
+        return new Query(select, condition.conditions, splice.splices, bySql);
     }
 
     public static QueryBuilder Build() {
-        QueryBuilder queryBuilder = new QueryBuilder();
-        return queryBuilder;
+        return new QueryBuilder();
     }
 
-    public Parameter where() {
-        return parameter;
+    public Condition where() {
+        return condition;
     }
-
 
 }

@@ -6,6 +6,7 @@ import com.codingapi.simplemybatis.parser.TableParser;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 class QueryTest {
 
@@ -61,5 +62,20 @@ class QueryTest {
         String sql = sqlBuilder.getSql();
         System.out.println(sql);
     }
+
+    @Test
+    void queryNotNullView() throws InvocationTargetException, IllegalAccessException {
+        Query query = QueryBuilder.Build()
+                .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
+                .where()
+                .notNullCondition("d.name1 = #{name}","123",null)
+                .or()
+                .notNullCondition("d.name2 = #{name}",new HashMap<>())
+                .builder();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
+        String sql = sqlBuilder.getSql();
+        System.out.println(sql);
+    }
+
 
 }

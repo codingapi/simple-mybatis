@@ -26,8 +26,26 @@ public class QueryBuilder {
     public class Condition {
         private List<ConditionParameter> conditions = new ArrayList<>();
 
+        public Splice notNullCondition(String conditionSql,String paramKey, Object paramVal) {
+            if(paramVal!=null) {
+                conditions.add(new ConditionParameter(paramKey, paramVal, conditionSql));
+            }else{
+                conditions.add(new ConditionParameter("1=1"));
+            }
+            return splice;
+        }
+
         public Splice condition(String conditionSql,String paramKey, Object paramVal) {
             conditions.add(new ConditionParameter(paramKey, paramVal, conditionSql));
+            return splice;
+        }
+
+        public Splice notNullCondition(String conditionSql,Map<String,Object> map) {
+            if(map!=null&&map.size()>0) {
+                conditions.add(new ConditionParameter(map, conditionSql));
+            }else{
+                conditions.add(new ConditionParameter("1=1"));
+            }
             return splice;
         }
 
@@ -41,8 +59,26 @@ public class QueryBuilder {
             return splice;
         }
 
+        public Splice notNullCondition(String conditionSql,Object paramVal) {
+            if(paramVal!=null) {
+                conditions.add(new ConditionParameter(paramVal, conditionSql));
+            }else{
+                conditions.add(new ConditionParameter("1=1"));
+            }
+            return splice;
+        }
+
         public Splice condition(String conditionSql,Object paramVal) {
             conditions.add(new ConditionParameter( paramVal, conditionSql));
+            return splice;
+        }
+
+        public Splice notNullCondition(String conditionSql,Object... paramVal) {
+            if(paramVal!=null&&paramVal.length>0) {
+                conditions.add(new ConditionParameter(StringUtils.join(paramVal, ","), conditionSql));
+            }else{
+                conditions.add(new ConditionParameter("1=1"));
+            }
             return splice;
         }
 
@@ -50,6 +86,7 @@ public class QueryBuilder {
             conditions.add(new ConditionParameter(StringUtils.join(paramVal,","), conditionSql));
             return splice;
         }
+
     }
 
     public class Splice {

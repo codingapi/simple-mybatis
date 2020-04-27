@@ -9,16 +9,30 @@ import com.codingapi.simplemybatis.query.parser.QueryCondition;
  */
 public class QueryParameter {
 
+    private String key;
+    private Object val;
+    private Object two;
+    private String sql;
+    private QueryCondition condition;
+
+
     public QueryParameter(String key, Object val, QueryCondition condition) {
         this.key = key;
         this.val = val;
         this.condition = condition;
     }
 
-    private String key;
-    private Object val;
-    private Object two;
-    private QueryCondition condition;
+    public QueryParameter(String key, Object val, String sql) {
+        this.key = key;
+        this.val = val;
+        this.sql = sql;
+        this.condition = QueryCondition.SQL;
+    }
+
+
+    public String getSql() {
+        return sql;
+    }
 
     public String getKey() {
         return key;

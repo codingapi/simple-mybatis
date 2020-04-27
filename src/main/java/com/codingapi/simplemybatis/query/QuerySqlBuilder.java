@@ -1,6 +1,7 @@
 package com.codingapi.simplemybatis.query;
 
 
+import com.codingapi.simplemybatis.query.parser.QueryCondition;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -42,7 +43,11 @@ public class QuerySqlBuilder {
 
     private void appendParameter() {
         for (QueryParameter queryParameter : query.getParameterList()) {
-            currentSql.append(queryConditionParser.parserParam(queryParameter));
+            if(queryParameter.getCondition().equals(QueryCondition.SQL)){
+                currentSql.append(queryParameter.getSql());
+            }else {
+                currentSql.append(queryConditionParser.parserParam(queryParameter));
+            }
             currentSql.append(query.getCondition());
         }
     }

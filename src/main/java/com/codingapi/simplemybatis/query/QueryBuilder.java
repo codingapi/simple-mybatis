@@ -30,13 +30,16 @@ public class QueryBuilder {
             return parameterList;
         }
 
-        public void column(QueryParameter queryParameter) {
+        public Condition column(QueryParameter queryParameter) {
             parameterList.add(queryParameter);
+            return condition;
         }
 
-        public void column(String key, Object val, QueryCondition condition) {
-            parameterList.add(new QueryParameter(key, val, condition));
+        public Condition column(String key, Object val,String sql) {
+            parameterList.add(new QueryParameter(key, val, sql));
+            return condition;
         }
+
 
         /**
          * 完全匹配

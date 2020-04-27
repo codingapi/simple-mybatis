@@ -23,6 +23,7 @@ public class QueryConditionParser {
     }
 
     public String parserParam(QueryParameter queryParameter) {
+        queryParameter.getCondition().equals(QueryCondition.SQL);
         for (IConditionParser conditionParser : conditionParsers) {
             if (conditionParser.type().equals(queryParameter.getCondition())) {
                 return conditionParser.condition(queryParameter);

@@ -13,6 +13,7 @@ public enum QueryCondition {
     BETWEEN,
     GREATER,
     LESS,
-    IN
+    IN,
+    SQL
 
 }

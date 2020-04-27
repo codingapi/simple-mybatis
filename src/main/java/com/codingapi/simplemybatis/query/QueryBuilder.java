@@ -3,6 +3,7 @@ package com.codingapi.simplemybatis.query;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,64 +27,42 @@ public class QueryBuilder {
     public class Condition {
         private List<ConditionParameter> conditions = new ArrayList<>();
 
-        public Splice notNullCondition(String conditionSql,String paramKey, Object paramVal) {
+        public Splice condition(String conditionSql,String paramKey, Object paramVal) {
             if(paramVal!=null) {
                 conditions.add(new ConditionParameter(paramKey, paramVal, conditionSql));
             }else{
-                conditions.add(new ConditionParameter("1=1"));
+                splice.remove();
             }
             return splice;
         }
 
-        public Splice condition(String conditionSql,String paramKey, Object paramVal) {
-            conditions.add(new ConditionParameter(paramKey, paramVal, conditionSql));
-            return splice;
-        }
 
-        public Splice notNullCondition(String conditionSql,Map<String,Object> map) {
+        public Splice condition(String conditionSql,Map<String,Object> map) {
             if(map!=null&&map.size()>0) {
                 conditions.add(new ConditionParameter(map, conditionSql));
             }else{
-                conditions.add(new ConditionParameter("1=1"));
+                splice.remove();
             }
             return splice;
         }
 
-        public Splice condition(String conditionSql,Map<String,Object> map) {
-            conditions.add(new ConditionParameter(map, conditionSql));
-            return splice;
-        }
 
-        public Splice condition(String conditionSql) {
-            conditions.add(new ConditionParameter(conditionSql));
-            return splice;
-        }
-
-        public Splice notNullCondition(String conditionSql,Object paramVal) {
+        public Splice condition(String conditionSql,Object paramVal) {
             if(paramVal!=null) {
                 conditions.add(new ConditionParameter(paramVal, conditionSql));
             }else{
-                conditions.add(new ConditionParameter("1=1"));
+                splice.remove();
             }
             return splice;
         }
 
-        public Splice condition(String conditionSql,Object paramVal) {
-            conditions.add(new ConditionParameter( paramVal, conditionSql));
-            return splice;
-        }
 
-        public Splice notNullCondition(String conditionSql,Object... paramVal) {
+        public Splice condition(String conditionSql,Object... paramVal) {
             if(paramVal!=null&&paramVal.length>0) {
                 conditions.add(new ConditionParameter(StringUtils.join(paramVal, ","), conditionSql));
             }else{
-                conditions.add(new ConditionParameter("1=1"));
+                splice.remove();
             }
-            return splice;
-        }
-
-        public Splice condition(String conditionSql,Object... paramVal) {
-            conditions.add(new ConditionParameter(StringUtils.join(paramVal,","), conditionSql));
             return splice;
         }
 
@@ -116,6 +95,8 @@ public class QueryBuilder {
             return condition;
         }
 
+
+
         public QueryBuilder orderBy(String orderByStr) {
             bySql = String.format(" order by %s",orderByStr);
             return QueryBuilder.this;
@@ -128,6 +109,12 @@ public class QueryBuilder {
 
         public Query builder() {
             return new Query(select, condition.conditions, splice.splices, bySql);
+        }
+
+        public void remove() {
+            if(splices.size()>0) {
+                splices.remove(splices.size()-1);
+            }
         }
     }
 

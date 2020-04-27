@@ -58,7 +58,7 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
   int save(T t);
 
   //批量保存  
-  int saveAll(@Param("list") List<T> list);
+  int saveAll(List<T> list);
 
   //修改数据，修改数据只会替换非null对象
   int update(T t);
@@ -67,29 +67,29 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
   int delete(T t);
 
   //批量删除，删除条件为Id
-  int deleteAll(@Param("list") List<T> list);
+  int deleteAll(List<T> list);
 
   //通过Id直接删除
-  int deleteById(@Param("id") Object id);
+  int deleteById(Object id);
 
   //通过Id批量删除
-  int deleteAllById(@Param("list") List id);
+  int deleteAllById(List id);
 ```
 
 * `QueryMapper`提供常用的查询操作
 ```java
 
   //通过Id查询
-  T getById(@Param("id") Object id);
+  T getById(Object id);
 
   //查询属于数据
   List<T> findAll();
 
   //通过Query查询数据
-  List<T> query(@Param("query") Query query);
+  List<T> query(Query query);
 
   //通过Query查询试图数据，返回List Map对象
-  List<Map<String,Object>> queryMap(@Param("query") Query query);
+  List<Map<String,Object>> queryMap(Query query);
 
   //通过Query查询试图数据，返回List Bean对象
   <V> List<V> queryView(Class<V> clazz, Query query);
@@ -115,28 +115,6 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
 
     List<TreeList<Demo>> treeLists =  demoMapper.tree( demoMapper::findAll,0L);
 	log.info("treeLists:{}",treeLists);
-```
-
-* 用户根据自己的Mapper来选择集成对应的功能接口
-
-```java
-    @Mapper
-    public interface DemoMapper extends QueryMapper<Demo>,IPageQuery<Demo>,ITreeQuery<Demo,Long> {
-    
-    
-    }
-    
-    @Mapper
-    public interface DemoMapper extends SimpleMapper<Demo> {
-    
-    
-    }
-    @Mapper
-    public interface DemoMapper extends CommandMapper<Demo> {
-    
-    
-    }
-
 ```
 
 

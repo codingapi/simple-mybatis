@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 /**
  * @author lorne
  * @date 2020/4/27
- * @description
  */
 public interface ViewMapper {
 

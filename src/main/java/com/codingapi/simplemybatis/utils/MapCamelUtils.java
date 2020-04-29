@@ -17,6 +17,7 @@ public class MapCamelUtils {
             String newKey = StringCharacterUtils.underlineToCamel(key);
             if (!newKey.equals(key)) {
                 item.put(newKey, item.get(key));
+                item.remove(key);
             }
         }
     }

@@ -50,7 +50,8 @@ public class TableParser {
     private void loadColumnNames(Object obj) throws IllegalAccessException, InvocationTargetException {
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
-            if(field.isSynthetic()){
+            Method method = getFieldMethod(field);
+            if(method==null||field.isSynthetic()){
                 continue;
             }
             Transient transientField = field.getAnnotation(Transient.class);
@@ -61,7 +62,6 @@ public class TableParser {
                 Id id = field.getAnnotation(Id.class);
                 if (id != null) {
                     String idColumnName = getColumnName(field.getAnnotation(Column.class), field);
-                    Method method = getFieldMethod(field);
                     Object idValue = getFieldValue(method, obj);
                     String fieldName = field.getName();
                     idColumn = new ColumnFiled(fieldName, idColumnName, idValue, method);
@@ -70,7 +70,6 @@ public class TableParser {
             }
             Column column = field.getAnnotation(Column.class);
             String columnName = getColumnName(column, field);
-            Method method = getFieldMethod(field);
             Object value = getFieldValue(method, obj);
             columns.add(new ColumnFiled(field.getName(), columnName, value, method));
         }

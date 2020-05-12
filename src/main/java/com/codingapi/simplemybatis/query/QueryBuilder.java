@@ -130,4 +130,9 @@ public class QueryBuilder {
         return condition;
     }
 
+    public QueryBuilder orderBy(String orderByStr) {
+        bySql = String.format(" order by %s",orderByStr);
+        return QueryBuilder.this;
+    }
+
 }

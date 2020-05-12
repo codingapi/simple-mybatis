@@ -62,6 +62,18 @@ class QueryTest {
         System.out.println(sql);
     }
 
+
+    @Test
+    void queryOrderBy() throws InvocationTargetException, IllegalAccessException {
+        Query query = QueryBuilder.Build()
+                .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
+                .orderBy("d.sort desc ")
+                .builder();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
+        String sql = sqlBuilder.getSql();
+        System.out.println(sql);
+    }
+
     @Test
     void queryNotNullView() throws InvocationTargetException, IllegalAccessException {
         Object object = Arrays.asList(1,2,3,4,5,6,7,8,9,10);

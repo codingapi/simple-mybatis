@@ -30,10 +30,14 @@ public interface QueryMapper<T> extends BaseMapper<T> {
     @SelectProvider(type = QueryProvider.class, method = "queryView")
     List<Map<String, Object>> queryMap(@Param("query") Query query);
 
+    @SuppressWarnings("unchecked")
     default <V> List<V> queryView(Class<V> clazz, Query query) {
         List<Map<String, Object>> list = queryMap(query);
         return list.stream().map(item -> {
             MapCamelUtils.camelMap(item);
+            if (Map.class.isAssignableFrom(clazz)) {
+                return (V) item;
+            }
             return MapBeanUtils.toBean(clazz, item);
         }).collect(Collectors.toList());
     }

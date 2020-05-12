@@ -36,7 +36,9 @@ public class ConditionParameter {
     public ConditionParameter(Object val, String sql) {
         this.map = new HashMap<>();
         String key = new PatternMatcherHelper(PatternMatcherHelper.BRACE_MATCHER).matcher(sql);
-        map.put(key,val);
+        if(key!=null) {
+            map.put(key, val);
+        }
         this.sql = sql;
     }
 

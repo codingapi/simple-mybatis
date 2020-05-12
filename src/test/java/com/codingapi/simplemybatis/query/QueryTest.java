@@ -64,10 +64,34 @@ class QueryTest {
 
 
     @Test
+    void queryNumberKey() throws InvocationTargetException, IllegalAccessException {
+        Query query = QueryBuilder.Build()
+                .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
+                .where()
+                .condition("d.order = #{?1} or d.order = #{?2} or d.order = #{?3} or d.order = #{?4} ",1,2,3,4)
+                .builder();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
+        String sql = sqlBuilder.getSql();
+        System.out.println(sql);
+    }
+
+    @Test
     void queryOrderBy() throws InvocationTargetException, IllegalAccessException {
         Query query = QueryBuilder.Build()
                 .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
                 .orderBy("d.sort desc ")
+                .builder();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
+        String sql = sqlBuilder.getSql();
+        System.out.println(sql);
+    }
+
+    @Test
+    void queryLikeKey() throws InvocationTargetException, IllegalAccessException {
+        Query query = QueryBuilder.Build()
+                .select("select * from t_demo d join t_test t on d.id = t.demo_id ")
+                .where()
+                .condition("d.name = #{name} and d.name = '123'",new HashMap<>())
                 .builder();
         SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(),null,query);
         String sql = sqlBuilder.getSql();

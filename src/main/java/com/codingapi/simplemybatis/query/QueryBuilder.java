@@ -38,14 +38,9 @@ public class QueryBuilder {
 
 
         public Splice condition(String conditionSql,Map<String,Object> map) {
-            if(map!=null&&map.size()>0) {
-                conditions.add(new ConditionParameter(map, conditionSql));
-            }else{
-                splice.remove();
-            }
+            conditions.add(new ConditionParameter(map, conditionSql));
             return splice;
         }
-
 
         public Splice condition(String conditionSql,Object paramVal) {
             if(paramVal!=null) {

@@ -2,7 +2,7 @@ package com.codingapi.simplemybatis.provider;
 
 import com.codingapi.simplemybatis.parser.SqlParser;
 import com.codingapi.simplemybatis.query.Query;
-import com.codingapi.simplemybatis.query.QuerySqlBuilder;
+import com.codingapi.simplemybatis.query.SqlBuilder;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 
@@ -29,8 +29,8 @@ public class QueryProvider extends BaseProvider {
 
 
     public String queryView(@Param("query") Query query, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        QuerySqlBuilder querySqlBuilder = new QuerySqlBuilder(query.getSelect(), null, query);
-        return querySqlBuilder.getSql();
+        SqlBuilder sqlBuilder = new SqlBuilder(query.getSelect(), null, query);
+        return sqlBuilder.getSql();
     }
 
 

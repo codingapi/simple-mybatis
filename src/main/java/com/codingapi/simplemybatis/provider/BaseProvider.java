@@ -2,6 +2,7 @@ package com.codingapi.simplemybatis.provider;
 
 import com.codingapi.simplemybatis.mapper.*;
 import com.codingapi.simplemybatis.parser.SqlParser;
+import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.parser.TableParser;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 
@@ -16,12 +17,9 @@ public class BaseProvider {
         return Stream.of(context.getMapperType().getGenericInterfaces())
                 .filter(ParameterizedType.class::isInstance)
                 .map(ParameterizedType.class::cast)
-                .filter(type -> (type.getRawType() == BaseMapper.class
-                        || type.getRawType() == CommonMapper.class
-                        || type.getRawType() == QueryMapper.class
-                        || type.getRawType() == SimpleMapper.class
-                        || type.getRawType() == TreeMapper.class
-                        || type.getRawType() == PageMapper.class)
+                .filter(
+                        (type) ->
+                                type.getRawType().getClass().isInstance(BaseMapper.class)
                 )
                 .findFirst()
                 .map(type -> type.getActualTypeArguments()[0])
@@ -34,8 +32,8 @@ public class BaseProvider {
             throws IllegalAccessException, InvocationTargetException {
         Class clazz = entityType(context);
         TableParser tableParser = new TableParser(clazz);
-        tableParser.parser(obj);
-        return new SqlParser(tableParser.getTableInfo());
+        TableInfo tableInfo = tableParser.parser(obj);
+        return new SqlParser(tableInfo);
     }
 
 }

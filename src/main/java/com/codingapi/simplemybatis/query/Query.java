@@ -1,10 +1,9 @@
 package com.codingapi.simplemybatis.query;
 
-import com.codingapi.simplemybatis.query.parser.QueryCondition;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author lorne
@@ -14,7 +13,7 @@ import java.util.Map;
 
 public class Query {
 
-    private List<QueryParameter> parameterList;
+    private List<ConditionParameter> parameterList;
 
     private List<String> conditions;
 
@@ -22,16 +21,16 @@ public class Query {
 
     private String select;
 
-    private String orderBy;
+    private String bySql;
 
     public Map<String, Object> data;
 
 
-    protected Query(String select, List<QueryParameter> parameterList, List<String> conditions, String orderBy) {
+    protected Query(String select, List<ConditionParameter> parameterList, List<String> conditions, String bySql) {
         this.select = select;
         this.parameterList = parameterList;
         this.conditions = conditions;
-        this.orderBy = orderBy;
+        this.bySql = bySql;
         this.data = new HashMap<>();
         pushData();
     }
@@ -40,15 +39,15 @@ public class Query {
         return select;
     }
 
-    public String getOrderBy() {
-        return orderBy;
+    public String getBySql() {
+        return bySql;
     }
 
     public Map<String, Object> getData() {
         return data;
     }
 
-    public List<QueryParameter> getParameterList() {
+    public List<ConditionParameter> getParameterList() {
         return parameterList;
     }
 
@@ -61,12 +60,10 @@ public class Query {
     }
 
     private void pushData() {
-        for (QueryParameter queryParameter : parameterList) {
-            if (queryParameter.getCondition().equals(QueryCondition.BETWEEN)) {
-                data.put(queryParameter.getKey(), queryParameter.getVal());
-                data.put(queryParameter.getTwoKey(), queryParameter.getTwo());
-            } else {
-                data.put(queryParameter.getKey(), queryParameter.getVal());
+        for (ConditionParameter parameter : parameterList) {
+            Set<String> keys = parameter.keys();
+            for (String key : keys) {
+                data.put(key, parameter.getVal(key));
             }
         }
     }

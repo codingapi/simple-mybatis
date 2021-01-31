@@ -5,9 +5,9 @@ import java.util.List;
 
 public class TreeList<T> {
 
-    T node;
+    private T node;
 
-    List<TreeList<T>> children;
+    private List<TreeList<T>> children;
 
     public TreeList(T node) {
         this.node = node;

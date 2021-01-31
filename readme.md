@@ -58,7 +58,7 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
   int save(T t);
 
   //批量保存  
-  int saveAll(@Param("list") List<T> list);
+  int saveAll(List<T> list);
 
   //修改数据，修改数据只会替换非null对象
   int update(T t);
@@ -67,29 +67,29 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
   int delete(T t);
 
   //批量删除，删除条件为Id
-  int deleteAll(@Param("list") List<T> list);
+  int deleteAll(List<T> list);
 
   //通过Id直接删除
-  int deleteById(@Param("id") Object id);
+  int deleteById(Object id);
 
   //通过Id批量删除
-  int deleteAllById(@Param("list") List id);
+  int deleteAllById(List id);
 ```
 
 * `QueryMapper`提供常用的查询操作
 ```java
 
   //通过Id查询
-  T getById(@Param("id") Object id);
+  T getById(Object id);
 
   //查询属于数据
   List<T> findAll();
 
   //通过Query查询数据
-  List<T> query(@Param("query") Query query);
+  List<T> query(Query query);
 
   //通过Query查询试图数据，返回List Map对象
-  List<Map<String,Object>> queryMap(@Param("query") Query query);
+  List<Map<String,Object>> queryMap(Query query);
 
   //通过Query查询试图数据，返回List Bean对象
   <V> List<V> queryView(Class<V> clazz, Query query);
@@ -117,28 +117,6 @@ public class Demo implements ITree<Long>{ //ITree根据业务需要可不实现
 	log.info("treeLists:{}",treeLists);
 ```
 
-* 用户根据自己的Mapper来选择集成对应的功能接口
-
-```java
-    @Mapper
-    public interface DemoMapper extends QueryMapper<Demo>,IPageQuery<Demo>,ITreeQuery<Demo,Long> {
-    
-    
-    }
-    
-    @Mapper
-    public interface DemoMapper extends SimpleMapper<Demo> {
-    
-    
-    }
-    @Mapper
-    public interface DemoMapper extends CommandMapper<Demo> {
-    
-    
-    }
-
-```
-
 
 * query使用说明     
 query 通过QueryBuilder来创建，当查询返回的是表的数据，则不需要写select语句，直接拼接where()查询条件。   
@@ -146,32 +124,31 @@ query 通过QueryBuilder来创建，当查询返回的是表的数据，则不�
 select语句中的字段可以用下划线，也可以直接处理成小驼峰。都可以转成java bean对象。     
 ```java
     @Test
-	void viewList(){
-	 //select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id where d.time = STR_TO_DATE('2020-04-12','%Y-$m-%d') or d.id = 31 and d.id in (1,2,3,4,5,6,7,8,9,10) and d.name like '%2%' order by d.name desc  
-		List<DemoView> list =
-				demoMapper.queryView(
-						DemoView.class,
-						QueryBuilder.Build()
-								.select("select d.name,d.super_id from t_demo d join t_test t on t.demo_id = d.id ")
-								.where()
-								.date("d.time","2020-04-12")
-								.or()
-								.equal("d.id",31)
-								.and()
-								.in("d.id",1,2,3,4,5,6,7,8,9,10)
-								.and()
-								.like("d.name","2")
-								.orderBy("d.name desc")
-								.builder());
-		log.info("list:{}",list);
-	}
+    void viewList(){
+        List<DemoView> list =
+                demoMapper.queryView(
+                        DemoView.class,
+                        QueryBuilder.Build()
+                                .select("select * from t_demo d left join t_refrigerator r on d.id = r.ID ")
+                                .where()
+                                .condition("d.id between #{small} and #{larger}", Map.of("small",1,"larger",10))
+                                .or()
+                                .condition("r.state = #{state}",1)
+                                .and()
+                                .condition("d.id in (${ids})",1,2,3,4,5,6,7,8,9,10)
+                                .or()
+                                .condition("d.name like '%${name}%'","2")
+                                .orderBy("d.id desc")
+                                .builder());
+        log.info("list:{}",list);
+    }
 
-	@Test
-	void queryList(){
-		//select * from t_demo where name = '123'
-		List<Demo> list = demoMapper.query(QueryBuilder.Build().where().equal("name","123").builder());
-		log.info("list:{}",list);
-	}
+    @Test
+    void queryList(){
+        //select * from t_demo where name = '123'
+        List<Demo> list = demoMapper.query(QueryBuilder.Build().where().condition("name=#{name}","123").builder());
+        log.info("list:{}",list);
+    }
 ```
 ## 示例
 

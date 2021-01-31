@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.parser;
 
 import com.codingapi.simplemybatis.query.Query;
-import com.codingapi.simplemybatis.query.QuerySqlBuilder;
+import com.codingapi.simplemybatis.query.SqlBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -37,14 +37,14 @@ public class SqlParser {
     }
 
     public String createQuery(Query query) {
-        QuerySqlBuilder querySqlBuilder = new QuerySqlBuilder(tableInfo.columnToFiled(), tableInfo.getTableName(), query);
-        return querySqlBuilder.getSql();
+        SqlBuilder sqlBuilder = new SqlBuilder(tableInfo.columnToFiled(), tableInfo.getTableName(), query);
+        return sqlBuilder.getSql();
     }
 
 
     public String createUpdateSql() {
         if (tableInfo.getIdColumnFiled().getValue() == null) {
-            throw new RuntimeException("no Id value,do't create update sql.");
+            throw new RuntimeException("no Id value,don't create update sql.");
         }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("update ");

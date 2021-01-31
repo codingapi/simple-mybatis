@@ -7,7 +7,6 @@ import java.util.function.Supplier;
 
 public interface ITreeQuery<T extends ITree<ID>, ID> {
 
-
     default List<TreeList<T>> tree(Supplier<List<T>> supplier, ID rootId) {
         List<T> list = supplier.get();
         List<TreeList<T>> trees = new ArrayList<>();

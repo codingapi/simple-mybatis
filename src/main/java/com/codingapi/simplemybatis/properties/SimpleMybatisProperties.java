@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.properties;
 
 
-public class DbProperties {
+public class SimpleMybatisProperties {
 
     private ColumnNameStyle columnNameStyle = ColumnNameStyle.UNDERLINE;
 
@@ -11,5 +11,9 @@ public class DbProperties {
 
     public ColumnNameStyle getColumnNameStyle() {
         return columnNameStyle;
+    }
+
+    public void setColumnNameStyle(ColumnNameStyle columnNameStyle) {
+        this.columnNameStyle = columnNameStyle;
     }
 }

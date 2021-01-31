@@ -22,8 +22,8 @@ class SqlParserTest {
     private SqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
-        tableParser.parser(demo);
-        return new SqlParser(tableParser.getTableInfo());
+        TableInfo tableInfo =  tableParser.parser(demo);
+        return new SqlParser(tableInfo);
     }
 
     @Test

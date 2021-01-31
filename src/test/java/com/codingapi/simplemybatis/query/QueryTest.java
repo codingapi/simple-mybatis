@@ -2,6 +2,7 @@ package com.codingapi.simplemybatis.query;
 
 import com.codingapi.simplemybatis.entity.Demo;
 import com.codingapi.simplemybatis.parser.SqlParser;
+import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.parser.TableParser;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +25,8 @@ class QueryTest {
     private SqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
-        tableParser.parser(demo);
-        return new SqlParser(tableParser.getTableInfo());
+        TableInfo tableInfo  = tableParser.parser(demo);
+        return new SqlParser(tableInfo);
     }
 
 

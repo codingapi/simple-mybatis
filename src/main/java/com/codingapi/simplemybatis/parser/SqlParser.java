@@ -44,7 +44,7 @@ public class SqlParser {
 
     public String createUpdateSql() {
         if (tableInfo.getIdColumnFiled().getValue() == null) {
-            throw new RuntimeException("no Id value,do't create update sql.");
+            throw new RuntimeException("no Id value,don't create update sql.");
         }
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("update ");

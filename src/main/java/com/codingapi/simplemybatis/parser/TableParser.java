@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.parser;
 
-import com.codingapi.simplemybatis.properties.DbProperties.ColumnNameStyle;
-import com.codingapi.simplemybatis.properties.GlabelProperties;
+import com.codingapi.simplemybatis.properties.SimpleMybatisProperties.ColumnNameStyle;
+import com.codingapi.simplemybatis.properties.SimpleMybatisPropertiesContext;
 import com.codingapi.simplemybatis.utils.StringCharacterUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -36,15 +36,16 @@ public class TableParser {
 
     public TableParser(Class<?> clazz) {
         this.clazz = clazz;
-        columnNameStyle = GlabelProperties.getInstance().getColumnNameStyle();
+        columnNameStyle = SimpleMybatisPropertiesContext.getInstance().getColumnNameStyle();
         propertyDescriptors = PropertyUtils.getPropertyDescriptors(clazz);
         columns = new ArrayList<>();
         loadTableName();
     }
 
 
-    public void parser(Object obj) throws IllegalAccessException, InvocationTargetException {
+    public TableInfo parser(Object obj) throws IllegalAccessException, InvocationTargetException {
         loadColumnNames(obj);
+        return new TableInfo(tableName, idColumn, columns);
     }
 
     private void loadColumnNames(Object obj) throws IllegalAccessException, InvocationTargetException {
@@ -138,9 +139,6 @@ public class TableParser {
         }
     }
 
-    public TableInfo getTableInfo() {
-        return new TableInfo(tableName, idColumn, columns);
-    }
 
 
     public static class ColumnFiled {

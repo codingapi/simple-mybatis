@@ -5,7 +5,7 @@
 
     <groupId>com.codingapi</groupId>
     <artifactId>simple-mybatis</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <name>simple-mybatis</name>
     <url>https://github.com/codingapi/simple-mybatis</url>
     <description>simple mybatis project for Spring Boot</description>

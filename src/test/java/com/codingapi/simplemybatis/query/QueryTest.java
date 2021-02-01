@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.query;
 
 import com.codingapi.simplemybatis.entity.Demo;
-import com.codingapi.simplemybatis.parser.SqlParser;
+import com.codingapi.simplemybatis.provider.mysql.MysqlSqlParser;
 import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.parser.TableParser;
 import org.junit.jupiter.api.Test;
@@ -22,18 +22,18 @@ class QueryTest {
         return demo;
     }
 
-    private SqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
+    private MysqlSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
         TableInfo tableInfo  = tableParser.parser(demo);
-        return new SqlParser(tableInfo);
+        return new MysqlSqlParser(tableInfo);
     }
 
 
     @Test
     void query() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createQuery(QueryBuilder.Build()
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createQuery(QueryBuilder.Build()
                 .where()
                 .condition("name=#{name}","hello")
                 .and()

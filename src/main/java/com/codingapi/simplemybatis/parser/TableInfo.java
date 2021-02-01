@@ -16,7 +16,9 @@ public class TableInfo {
 
     private List<TableParser.ColumnFiled> columnFields;
 
-    public TableInfo(String tableName, TableParser.ColumnFiled idColumnFiled, List<TableParser.ColumnFiled> columnFields) {
+    public TableInfo(String tableName,
+                     TableParser.ColumnFiled idColumnFiled,
+                     List<TableParser.ColumnFiled> columnFields) {
         this.tableName = tableName;
         this.idColumnFiled = idColumnFiled;
         this.columnFields = columnFields;

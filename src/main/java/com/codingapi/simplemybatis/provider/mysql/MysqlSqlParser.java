@@ -1,16 +1,17 @@
-package com.codingapi.simplemybatis.parser;
+package com.codingapi.simplemybatis.provider.mysql;
 
+import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.query.Query;
 import com.codingapi.simplemybatis.query.SqlBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class SqlParser {
+public class MysqlSqlParser {
 
     private TableInfo tableInfo;
 
-    public SqlParser(TableInfo tableInfo) {
+    public MysqlSqlParser(TableInfo tableInfo) {
         this.tableInfo = tableInfo;
     }
 
@@ -57,17 +58,6 @@ public class SqlParser {
         return stringBuilder.toString();
     }
 
-    public String createDeleteSql() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("delete from ");
-        stringBuilder.append(tableInfo.getTableName());
-        stringBuilder.append(" where ");
-        stringBuilder.append(tableInfo.getIdColumnFiled().getColumnName());
-        stringBuilder.append("=");
-        stringBuilder.append("#{").append(tableInfo.getIdColumnFiled().getFieldName()).append("}");
-        return stringBuilder.toString();
-    }
-
 
     public String createInsertAllSql(List list)
             throws InvocationTargetException, IllegalAccessException {
@@ -87,6 +77,17 @@ public class SqlParser {
         stringBuilder.append(" ) ");
         stringBuilder.append("</foreach>");
         stringBuilder.append("</script>");
+        return stringBuilder.toString();
+    }
+
+    public String createDeleteSql() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("delete from ");
+        stringBuilder.append(tableInfo.getTableName());
+        stringBuilder.append(" where ");
+        stringBuilder.append(tableInfo.getIdColumnFiled().getColumnName());
+        stringBuilder.append("=");
+        stringBuilder.append("#{").append(tableInfo.getIdColumnFiled().getFieldName()).append("}");
         return stringBuilder.toString();
     }
 

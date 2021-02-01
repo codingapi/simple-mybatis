@@ -1,6 +1,7 @@
 package com.codingapi.simplemybatis.parser;
 
 import com.codingapi.simplemybatis.entity.Demo;
+import com.codingapi.simplemybatis.provider.mysql.MysqlSqlParser;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,17 +20,17 @@ class SqlParserTest {
         return demo;
     }
 
-    private SqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
+    private MysqlSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
         TableInfo tableInfo =  tableParser.parser(demo);
-        return new SqlParser(tableInfo);
+        return new MysqlSqlParser(tableInfo);
     }
 
     @Test
     void createInsertSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createInsertSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createInsertSql();
         System.out.println(sql);
     }
 
@@ -37,8 +38,8 @@ class SqlParserTest {
 
     @Test
     void createSelectAll() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createSelectAll();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createSelectAll();
         System.out.println(sql);
     }
 
@@ -46,46 +47,46 @@ class SqlParserTest {
 
     @Test
     void createUpdateSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createUpdateSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createUpdateSql();
         System.out.println(sql);
     }
 
     @Test
     void createDeleteSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createDeleteSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createDeleteSql();
         System.out.println(sql);
     }
 
     @Test
     void createInsertAllSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
         List<Demo> list = new ArrayList<>();
         list.add(createDemo());
         list.add(createDemo());
-        String sql = sqlParser.createInsertAllSql(list);
+        String sql = mysqlSqlParser.createInsertAllSql(list);
         System.out.println(sql);
     }
 
     @Test
     void createDeleteAllSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createDeleteAllSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createDeleteAllSql();
         System.out.println(sql);
     }
 
     @Test
     void createDeleteAllByIdSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createDeleteAllByIdSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createDeleteAllByIdSql();
         System.out.println(sql);
     }
 
     @Test
     void createGetByIdSql() throws InvocationTargetException, IllegalAccessException {
-        SqlParser sqlParser = createSqlParser();
-        String sql = sqlParser.createGetByIdSql();
+        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        String sql = mysqlSqlParser.createGetByIdSql();
         System.out.println(sql);
     }
 }

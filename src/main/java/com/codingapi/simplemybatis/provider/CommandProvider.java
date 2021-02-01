@@ -1,54 +1,48 @@
 package com.codingapi.simplemybatis.provider;
 
-import com.codingapi.simplemybatis.parser.SqlParser;
-import org.apache.ibatis.builder.annotation.ProviderContext;
-
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 
-public class CommandProvider extends BaseProvider {
+public class CommandProvider  {
 
-
-    public String save(Object obj, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(obj, context);
-        return sqlParser.createInsertSql();
+    public String save(Object obj, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,obj);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).insertSql(simpleProviderContext);
     }
 
-    public String saveAll(Map<String, Object> map, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        List list = (List) map.get("list");
-        if (list == null || list.size() == 0) {
-            throw new RuntimeException("not data.");
-        }
-        SqlParser sqlParser = createParser(null, context);
-        return sqlParser.createInsertAllSql(list);
+    public String saveAll(Map<String, Object> map, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,map);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).insertAllSql(simpleProviderContext);
     }
 
-    public String deleteAll(Map<String, Object> map, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(null, context);
-        return sqlParser.createDeleteAllSql();
+    public String deleteAll(Map<String, Object> map, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,map);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).deleteAllSql(simpleProviderContext);
     }
 
-    public String deleteAllById(Map<String, Object> map, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(null, context);
-        return sqlParser.createDeleteAllByIdSql();
+    public String deleteAllById(Map<String, Object> map, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,map);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).deleteAllByIdSql(simpleProviderContext);
+    }
+
+    public String deleteById(Object obj, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,obj);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).deleteByIdSql(simpleProviderContext);
+    }
+
+    public String delete(Object obj, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,obj);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).deleteSql(simpleProviderContext);
     }
 
 
-    public String update(Object obj, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(obj, context);
-        return sqlParser.createUpdateSql();
+    public String update(Object obj, org.apache.ibatis.builder.annotation.ProviderContext context) throws IllegalAccessException, InvocationTargetException {
+        SimpleProviderContext simpleProviderContext = new SimpleProviderContext(context,obj);
+        return SimpleMybatisProviderContext.getInstance().getBuilder(CommandSQLBuilder.class).updateSql(simpleProviderContext);
     }
 
-    public String delete(Object obj, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(obj, context);
-        return sqlParser.createDeleteSql();
-    }
 
-    public String deleteById(Object obj, ProviderContext context) throws IllegalAccessException, InvocationTargetException {
-        SqlParser sqlParser = createParser(null, context);
-        return sqlParser.createDeleteSql();
-    }
+
 
 
 }

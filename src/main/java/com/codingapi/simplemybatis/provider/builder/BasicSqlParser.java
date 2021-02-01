@@ -1,4 +1,4 @@
-package com.codingapi.simplemybatis.provider.mysql;
+package com.codingapi.simplemybatis.provider.builder;
 
 import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.query.Query;
@@ -7,11 +7,11 @@ import com.codingapi.simplemybatis.query.SqlBuilder;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-public class MysqlSqlParser {
+public class BasicSqlParser {
 
     private TableInfo tableInfo;
 
-    public MysqlSqlParser(TableInfo tableInfo) {
+    public BasicSqlParser(TableInfo tableInfo) {
         this.tableInfo = tableInfo;
     }
 

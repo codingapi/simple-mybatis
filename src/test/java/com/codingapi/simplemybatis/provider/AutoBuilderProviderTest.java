@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.provider;
 
 import com.codingapi.simplemybatis.entity.Demo;
-import com.codingapi.simplemybatis.provider.mysql.MysqlSqlParser;
+import com.codingapi.simplemybatis.provider.builder.BasicSqlParser;
 import com.codingapi.simplemybatis.parser.TableInfo;
 import com.codingapi.simplemybatis.parser.TableParser;
 import org.junit.jupiter.api.Test;
@@ -23,17 +23,17 @@ class AutoBuilderProviderTest {
         return demo;
     }
 
-    private MysqlSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
+    private BasicSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
         TableInfo tableInfo =  tableParser.parser(demo);
-        return new MysqlSqlParser(tableInfo);
+        return new BasicSqlParser(tableInfo);
     }
 
     @Test
     void create() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createInsertSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createInsertSql();
         System.out.println(sql);
     }
 

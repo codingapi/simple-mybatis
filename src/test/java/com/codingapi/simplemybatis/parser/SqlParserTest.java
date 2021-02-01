@@ -1,7 +1,7 @@
 package com.codingapi.simplemybatis.parser;
 
 import com.codingapi.simplemybatis.entity.Demo;
-import com.codingapi.simplemybatis.provider.mysql.MysqlSqlParser;
+import com.codingapi.simplemybatis.provider.builder.BasicSqlParser;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,17 +20,17 @@ class SqlParserTest {
         return demo;
     }
 
-    private MysqlSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
+    private BasicSqlParser createSqlParser() throws InvocationTargetException, IllegalAccessException {
         Demo demo = createDemo();
         TableParser tableParser = new TableParser(demo.getClass());
         TableInfo tableInfo =  tableParser.parser(demo);
-        return new MysqlSqlParser(tableInfo);
+        return new BasicSqlParser(tableInfo);
     }
 
     @Test
     void createInsertSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createInsertSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createInsertSql();
         System.out.println(sql);
     }
 
@@ -38,8 +38,8 @@ class SqlParserTest {
 
     @Test
     void createSelectAll() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createSelectAll();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createSelectAll();
         System.out.println(sql);
     }
 
@@ -47,46 +47,46 @@ class SqlParserTest {
 
     @Test
     void createUpdateSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createUpdateSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createUpdateSql();
         System.out.println(sql);
     }
 
     @Test
     void createDeleteSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createDeleteSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createDeleteSql();
         System.out.println(sql);
     }
 
     @Test
     void createInsertAllSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
+        BasicSqlParser basicSqlParser = createSqlParser();
         List<Demo> list = new ArrayList<>();
         list.add(createDemo());
         list.add(createDemo());
-        String sql = mysqlSqlParser.createInsertAllSql(list);
+        String sql = basicSqlParser.createInsertAllSql(list);
         System.out.println(sql);
     }
 
     @Test
     void createDeleteAllSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createDeleteAllSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createDeleteAllSql();
         System.out.println(sql);
     }
 
     @Test
     void createDeleteAllByIdSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createDeleteAllByIdSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createDeleteAllByIdSql();
         System.out.println(sql);
     }
 
     @Test
     void createGetByIdSql() throws InvocationTargetException, IllegalAccessException {
-        MysqlSqlParser mysqlSqlParser = createSqlParser();
-        String sql = mysqlSqlParser.createGetByIdSql();
+        BasicSqlParser basicSqlParser = createSqlParser();
+        String sql = basicSqlParser.createGetByIdSql();
         System.out.println(sql);
     }
 }

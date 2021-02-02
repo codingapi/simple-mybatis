@@ -59,20 +59,34 @@ public class TableParser {
             if (transientField != null) {
                 continue;
             }
+            Column column = field.getAnnotation(Column.class);
+            String columnName = getColumnName(column, field);
+            String columnDefinition = getColumnDefinition(column,field);
+
             if (idColumn == null) {
                 Id id = field.getAnnotation(Id.class);
                 if (id != null) {
-                    String idColumnName = getColumnName(field.getAnnotation(Column.class), field);
                     Object idValue = getFieldValue(method, obj);
                     String fieldName = field.getName();
-                    idColumn = new ColumnFiled(fieldName, idColumnName, idValue, method);
+                    idColumn = new ColumnFiled(fieldName, columnName,columnDefinition, idValue, method);
                     continue;
                 }
             }
-            Column column = field.getAnnotation(Column.class);
-            String columnName = getColumnName(column, field);
+
             Object value = getFieldValue(method, obj);
-            columns.add(new ColumnFiled(field.getName(), columnName, value, method));
+            columns.add(new ColumnFiled(field.getName(), columnName,columnDefinition, value, method));
+        }
+    }
+
+    private String getColumnDefinition(Column column, Field field) {
+        if (column == null) {
+            return FieldTypeConvertorContext.getInstance().convertor(field.getType(),255);
+        } else {
+            String columnDefinition = column.columnDefinition();
+            if(StringUtils.isEmpty(columnDefinition)){
+                return FieldTypeConvertorContext.getInstance().convertor(field.getType(),column.length());
+            }
+            return columnDefinition;
         }
     }
 
@@ -144,47 +158,39 @@ public class TableParser {
     public static class ColumnFiled {
         private String fieldName;
         private String columnName;
+        private String columnDefinition;
         private Object value;
         private Method method;
 
-        public ColumnFiled(String fieldName, String columnName, Object value, Method method) {
+        public ColumnFiled(String fieldName, String columnName,String columnDefinition, Object value, Method method) {
             this.fieldName = fieldName;
             this.columnName = columnName;
+            this.columnDefinition = columnDefinition;
             this.value = value;
             this.method = method;
+        }
+
+        public String getColumnDefinition() {
+            return columnDefinition;
         }
 
         public String getFieldName() {
             return fieldName;
         }
 
-        public void setFieldName(String fieldName) {
-            this.fieldName = fieldName;
-        }
 
         public String getColumnName() {
             return columnName;
-        }
-
-        public void setColumnName(String columnName) {
-            this.columnName = columnName;
         }
 
         public Object getValue() {
             return value;
         }
 
-        public void setValue(Object value) {
-            this.value = value;
-        }
-
         public Method getMethod() {
             return method;
         }
 
-        public void setMethod(Method method) {
-            this.method = method;
-        }
     }
 
 

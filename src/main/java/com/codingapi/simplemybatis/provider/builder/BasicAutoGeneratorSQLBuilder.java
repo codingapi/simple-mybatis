@@ -15,8 +15,9 @@ public class BasicAutoGeneratorSQLBuilder implements AutoGeneratorSQLBuilder {
     @Override
     public String create(SimpleProviderContext simpleProviderContext) throws IllegalAccessException, InvocationTargetException {
         TableInfo tableInfo = simpleProviderContext.nullTableInfo();
-        //todo create table sql
-        return "create table "+tableInfo.getTableName();
+        BasicTableBuilder builder = new BasicTableBuilder(tableInfo);
+        builder.builder();
+        return builder.sql();
     }
 
     @Override
